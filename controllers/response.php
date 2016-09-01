@@ -53,12 +53,11 @@ class Response extends MX_Controller {
     }
 
     function index() {
-        openlog("payulatam", LOG_PID | LOG_PERROR | LOG_DEBUG, LOG_LOCAL0);
+        openlog("payulatam_confirmation", LOG_PID | LOG_PERROR | LOG_DEBUG, LOG_LOCAL0);
         syslog(LOG_DEBUG, json_encode($_POST));
         syslog(LOG_DEBUG, json_encode($_GET));
-        closelog();
         $this->process();
-
+        closelog();
     }
 
     function process(){

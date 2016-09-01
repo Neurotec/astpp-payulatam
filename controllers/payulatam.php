@@ -1,3 +1,4 @@
+
 <?php
 
 require_once "payu-php-sdk-4.5.6/lib/PayU.php";
@@ -142,7 +143,6 @@ class Payulatam extends MX_Controller {
     }
 
     function user_payment($action="") {
-        $action = $this->input->post("action");
         $this->load->module("payulatam/payment");
         if($action=="GET_AMT"){
             $amount = $this->input->post("value",true);
