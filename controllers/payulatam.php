@@ -134,6 +134,13 @@ class Payulatam extends MX_Controller {
 
     }
 
+    function index() {
+        if ($this->session->userdata('user_login') == FALSE)
+            redirect(base_url() . 'login/login');
+        $data['page_title'] = 'Dashboard';
+        $this->load->view('view_user_dashboard', $data);
+    }
+
     function user_payment($action="") {
         $action = $this->input->post("action");
         $this->load->module("payulatam/payment");
