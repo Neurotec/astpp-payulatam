@@ -1,6 +1,6 @@
-INSERT INTO menu_modules VALUES(NULL, "Payulatam", "payulatam", "payulatam/payulatam_payment/", "Payment", "ListAccounts.png", 0, 5.3);
+INSERT INTO menu_modules VALUES(NULL, "Payulatam", "payulatam", "payulatam/user_payment/", "Payment", "ListAccounts.png", 0, 5.3);
 
-UPDATE userlevels SET module_permissions = CONCAT(module_permissions, ",", (SELECT id FROM menu_modules WHERE module_url =  "payulatam/payulatam_payment/")) where userlevelid = 0;
+UPDATE userlevels SET module_permissions = CONCAT(module_permissions, ",", (SELECT id FROM menu_modules WHERE module_url =  "payulatam/user_payment/")) where userlevelid = 0;
 
 INSERT INTO menu_modules VALUES(NULL, 'Payulatam', 'payulatam', 'systems/configuration/payulatam', 'Configuration', '', '0', 80.12);
 UPDATE userlevels SET module_permissions = CONCAT(module_permissions, ",", (SELECT id FROM menu_modules WHERE module_url =  'systems/configuration/payulatam')) where userlevelid = -1;
