@@ -32,7 +32,7 @@
          
          $.ajax({
              type:'POST',
-             url: "<?= base_url()?>/user/user_payment/GET_AMT/",
+             url: "<?= base_url()?>/payulatam/user_payment/GET_AMT/",
              data:"value="+Final_amt, 
              success: function(response) {
                  $("#amt_in_currency").html(Final_amt +" "+from_cur + " To " + response +" "+to_cur);
