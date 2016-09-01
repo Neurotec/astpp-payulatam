@@ -96,7 +96,7 @@ Recharge
 			    <span id="amt_in_currency" style="color:green;text-align:left !important;font-size:11px; ">0 <?= $from_currency?> is equals to 0 <?= $to_currency?></span>
 			</div>
 
-			<form name="payment_form" id="payment_form" action="<? $payulatam_url?>" method="POST" onSubmit="return form_submit();">
+			<form name="payment_form" id="payment_form" action="<?= $payulatam_url?>" method="POST" onSubmit="return form_submit();">
 			    <div class='col-md-7 no-padding  margin-t-10'>
 				<label style=" float: left;">Net Payable Amount in <?= $to_currency?>:</label>
 			    </div>
