@@ -20,6 +20,7 @@ class Payment extends MX_Controller {
         if($system_config['payulatam_mode'] == 0) {
             $data['apiKey'] = $system_config['payulatam_apikey'];
             $data['payulatam_url'] = $system_config['payulatam_url'];
+            $data['referenceCode'] = 'Recharge_' . $account_data['number'] . strftime("%F%T");
         }else{
             $data = array_merge($data, $this->data_test());
             $data['apiKey'] = '4Vj8eK4rloUd272L48hsrarnUA';
