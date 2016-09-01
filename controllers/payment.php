@@ -18,14 +18,17 @@ class Payment extends MX_Controller {
         $data = $this->data_base($account_data);
         $system_config = common_model::$global_config['system_config'];
         if($system_config['payulatam_mode'] == 0) {
+            $data['testMode'] = false;
             $data['apiKey'] = $system_config['payulatam_apikey'];
             $data['payulatam_url'] = $system_config['payulatam_url'];
             $data['referenceCode'] = 'Recharge_' . $account_data['number'] .'_' . strftime("%F%T");
         }else{
+            $data['testMode'] = true;
             $data = array_merge($data, $this->data_test());
             $data['apiKey'] = '4Vj8eK4rloUd272L48hsrarnUA';
             $data['payulatam_url'] = 'https://sandbox.gateway.payulatam.com/ppp-web-gateway/';
         }
+
         $data["merchantId"] = $system_config['payulatam_merchantid'];
         $data["accountId"] = $system_config['payulatam_accountid'];
         

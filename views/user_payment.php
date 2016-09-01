@@ -116,7 +116,9 @@ Recharge
 					<input name="extra1" type="hidden" value="<?= $customerId ?>" >
                     <input name="extra2" type="hidden" value="<?= $checkValue?>" >
 					<input id="signature" name="signa ture"     type="hidden"  value="ba9ffa71559580175585e45ce70b6c37"  >
+<? if($testMode): ?>
 					<input name="test"          type="hidden"  value="1" >
+<? endif; ?>
 					<input name="buyerFullName" type="hidden" value="<?= $buyerFullName?>">
 					<input name="buyerEmail"    type="hidden"  value="<?= $buyerEmail?>" >
 					<input name="confirmationUrl"    type="hidden"  value="<?= base_url()?>payulatam/response">
