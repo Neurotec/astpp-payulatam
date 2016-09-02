@@ -12,7 +12,7 @@
  $(document).ready(function() {
      
      $("#gross_amount").change(function(e){
-	 var amt = Math.ceil($("#gross_amount").val());
+	 var amt = $("#gross_amount").val();
          var gateway_tax = '<?=$gateway_tax?>';
          var tax = (amt*gateway_tax)/100;
          var Final_amt = parseInt(amt)+parseFloat(tax);
@@ -44,7 +44,7 @@
  })
  
  function form_submit(){
-	 var signature = "<?= $apiKey?>~<?= $merchantId?>~<?= $referenceCode?>~" + Math.ceil($("#amount").val()) + "~USD";
+	 var signature = "<?= $apiKey?>~<?= $merchantId?>~<?= $referenceCode?>~" + $("#amount").val() + "~USD";
      if($("#amount").val() > 0){
 		 $("#signature").val(md5(signature));
          return true;
@@ -107,7 +107,7 @@ Recharge
 				<div>
 					<input id="merchantId" name="merchantId"    type="hidden"  value="<?= $merchantId?>"   >
 					<input id="accountId" name="accountId"     type="hidden"  value="<?= $accountId?>" >
-                    <input name="ApiKey" type="hidden" value="<?= $apiKey?>" />
+                    <!-- <input name="ApiKey" type="hidden" value="<?= $apiKey?>" /> -->
 					<input name="description"   type="hidden"  value="<?= $description?>"  >
 					<input name="referenceCode" type="hidden"  value="<?= $referenceCode?>" >
 					<input name="tax"           type="hidden"  value="0"  >
@@ -115,7 +115,7 @@ Recharge
 					<input name="currency"      type="hidden"  value="USD" >
 					<input name="extra1" type="hidden" value="<?= $customerId ?>" >
                     <input name="extra2" type="hidden" value="<?= $checkValue?>" >
-					<input id="signature" name="signa ture"     type="hidden"  value="ba9ffa71559580175585e45ce70b6c37"  >
+					<input id="signature" name="signature"     type="hidden"  value="ba9ffa71559580175585e45ce70b6c37"  >
 <? if($testMode): ?>
 					<input name="test"          type="hidden"  value="1" >
 <? endif; ?>

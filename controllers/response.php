@@ -1,41 +1,42 @@
 <?php
 
+require_once "config.php";
 
 class PayUTransactionResponseCode {
 
 	/** Error transaction code */
 	const ERROR = 'ERROR';
 	/** Approved transaction code */
-	const APPROVED = 1;
+	const APPROVED = "1";
 	/** Transaction declined by the entity code */
-	const ENTITY_DECLINED = 5;
+	const ENTITY_DECLINED = "5";
 	/** Transaction rejected by anti fraud system code */
-	const ANTIFRAUD_REJECTED = 23;
+	const ANTIFRAUD_REJECTED = "23";
 	/** Transaction expired code */
-	const EXPIRED_TRANSACTION = 20;
-	const DIGITAL_CERTIFICATE_NOT_FOUND = 9995;
+	const EXPIRED_TRANSACTION = "20";
+	const DIGITAL_CERTIFICATE_NOT_FOUND = "9995";
 	/** Transaction rejected by payment network */
-	const PAYMENT_NETWORK_REJECTED = 4;
+	const PAYMENT_NETWORK_REJECTED = "4";
 	/** Invalid data code */
-	const INVALID_EXPIRATION_DATE_OR_SECURITY_CODE = 12;
+	const INVALID_EXPIRATION_DATE_OR_SECURITY_CODE = "12";
 	/** Insufficient funds code */
-	const INSUFFICIENT_FUNDS = 6;
+	const INSUFFICIENT_FUNDS = "6";
 	/** Credit card not authorized code */
-	const CREDIT_CARD_NOT_AUTHORIZED_FOR_INTERNET_TRANSACTIONS = 22;
+	const CREDIT_CARD_NOT_AUTHORIZED_FOR_INTERNET_TRANSACTIONS = "22";
 	/** Transaction is not valid code */
-	const INVALID_TRANSACTION = 14;
+	const INVALID_TRANSACTION = "14";
 	/** Credit card is not valid code */
-	const INVALID_CARD = 7;
+	const INVALID_CARD = "7";
 	/** Credit card is restricted code */
-	const RESTRICTED_CARD = 9;
+	const RESTRICTED_CARD = "9";
 	/** Need to contact the entity code */
-	const CONTACT_THE_ENTITY = 8;
+	const CONTACT_THE_ENTITY = "8";
 	/** Need to repeat transaction code */
-	const REPEAT_TRANSACTION = 13;
-	const BANK_UNREACHABLE = 9996;
+	const REPEAT_TRANSACTION = "13";
+	const BANK_UNREACHABLE = "9996";
 	/** Amount not valid code */
-	const EXCEEDED_AMOUNT = 17;
-    const ABANDONED_TRANSACTION = 18;
+	const EXCEEDED_AMOUNT = "17";
+    const ABANDONED_TRANSACTION = "18";
 }
 
 
@@ -48,7 +49,7 @@ class Response extends MX_Controller {
         $this->load->library('encrypt');
         $this->load->helper('form');
         $this->load->model('db_model');
-
+        $this->load->model('Astpp_common');
         $this->load->library('session');
     }
 
@@ -61,7 +62,7 @@ class Response extends MX_Controller {
     }
 
     function process(){
-
+	$this->output->set_status_header(200);
       if(count($_POST)>0)
           {
               $response_arr=$_POST;
@@ -71,10 +72,17 @@ class Response extends MX_Controller {
               fwrite($fp,"====================".$date."===============================\n");
               foreach($response_arr as $key => $value){	  
                   fwrite($fp,$key.":::>".$value."\n");
+
               }
+
+		if($this->exists_transaction($response_arr)) {
+			syslog(LOG_DEBUG, "Done Transaction");
+			return;
+		}
+              $payment_check = md5($response_arr["merchant_id"].PAYULATAM_SALT);
               $this->save_transaction($response_arr);
-              //$payment_check = $this->encrypt->decode($response_arr['checkValue']);
-              if( ($response_arr["state_pol"] == PayUTransactionResponseCode::APPROVED /*&& $payment_check == $response_arr["merchant_id"]*/) ){
+	     syslog(LOG_DEBUG, "Checking transaction");
+              if( ($response_arr["response_code_pol"] == PayUTransactionResponseCode::APPROVED && $payment_check == $response_arr["extra2"]) ){
 
                   $balance_amt = $response_arr["value"]; //es custom
                   $account_data = (array)$this->db->get_where("accounts", array("id" => $response_arr["extra1"]))->first_row();
@@ -172,11 +180,15 @@ class Response extends MX_Controller {
                           }
                       }
                   }
-                  redirect(base_url() . 'user/user/');
               }
           }
-      redirect(base_url() . 'user/user/');
+
+	     syslog(LOG_DEBUG, "Transaction Done");
     }
+
+    private function exists_transaction($response_arr) {
+	return $this->db_model->countQuery("*", "payulatam_transactions", array('transaction_id' => $response_arr['transcation_id'])) > 0;
+	}
 
     private function save_transaction($response_arr) {
         $txn_data = array(

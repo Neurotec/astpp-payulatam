@@ -1,6 +1,7 @@
 <?php
 
 require_once "payu-php-sdk-4.5.6/lib/PayU.php";
+require_once "config.php";
 
 class Payment extends MX_Controller {
 
@@ -14,7 +15,6 @@ class Payment extends MX_Controller {
 
     function index() {
         $account_data = $this->session->userdata("accountinfo");
-
         $data = $this->data_base($account_data);
         $system_config = common_model::$global_config['system_config'];
         if($system_config['payulatam_mode'] == 0) {
@@ -31,8 +31,7 @@ class Payment extends MX_Controller {
 
         $data["merchantId"] = $system_config['payulatam_merchantid'];
         $data["accountId"] = $system_config['payulatam_accountid'];
-        
-        $data["checkValue"] = $this->encrypt->encode($data['merchantId']);
+        $data["checkValue"] = md5($data['merchantId'].PAYULATAM_SALT);
         $data["gateway_tax"] = 0;
         $data["from_currency"] = $this->common->get_field_name('currency', 'currency', $account_data["currency_id"]);
         $data["to_currency"] = Common_model::$global_config['system_config']['base_currency'];
@@ -52,7 +51,6 @@ class Payment extends MX_Controller {
         $data["merchantId"] = "508029";
         $data["accountId"] = "512321";
         $data["apiKey"] = "4Vj8eK4rloUd272L48hsrarnUA";
-        $data["checkValue"] = $this->encrypt->encode($data['merchantId']);
         $data["referenceCode"] = "TestPayU";
         return $data;
     }
