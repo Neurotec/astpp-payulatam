@@ -3,6 +3,10 @@
 
 Module de recarga por **Payulatam**.
 
+# Requerimientos
+
+  Astpp v3
+  
 ## CARACTERISTICAS
 
   * Pago por Webcheckout Payulatam
