@@ -1,5 +1,5 @@
-
 <?php
+//@author Jovany Leandro G.C <dirindesa@neurotec.c>
 
 require_once "payu-php-sdk-4.5.6/lib/PayU.php";
 

@@ -1,5 +1,5 @@
 <?php
-
+//@author Jovany Leandro G.C <dirindesa@neurotec.c>
 //@deprecated responseUrl si se omite lo maneja directamente en payulatam y eso es el metodo que vamos a usar
 /*
 CREATE TABLE payulatam_response (

@@ -10,5 +10,7 @@ Module de recarga por **Payulatam**.
 
 ## INSTALACION
 
-  * Ejecutar instrucciones en *install.sql*
+  * Clonar repositorio a **/var/www/html/astpp/application/modules/payulatam**.
+  * Ejecutar instrucciones en *install.sql* para la base de datos del ASTPP.
+  * Actualizar  SALT para **payulatam/controllers/config.php**
   * Configuration/Payulatam configurar cuenta Merchant Id y Account Id

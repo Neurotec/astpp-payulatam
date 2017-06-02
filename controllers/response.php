@@ -1,4 +1,5 @@
 <?php
+//@author Jovany Leandro G.C <dirindesa@neurotec.c>
 
 require_once "config.php";
 
