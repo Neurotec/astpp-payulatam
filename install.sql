@@ -10,6 +10,12 @@ INSERT INTO system VALUES(NULL,'payulatam_accountid', 'AccountId Id', '512321', 
 INSERT INTO system VALUES(NULL,'payulatam_url', 'Url', 'https://gateway.payulatam.com/ppp-web-gateway/', 'default_system_input', 'Url payulatam', NULL, 0, 0, 'payulatam');
 INSERT INTO system VALUES(NULL,'payulatam_apikey', 'Api Key', '4Vj8eK4rloUd272L48hsrarnUA', 'default_system_input', 'Url payulatam', NULL, 0, 0, 'payulatam');
 
+INSERT INTO system VALUES(NULL,'payulatam_gatewayTax', 'Tax %', '0', 'default_system_input' , 'Tax %', NULL, 0, 0, 'payulatam');
+
+-- INSERT INTO system VALUES(NULL,'payulatam_buyerEmail', 'Buyer Email', 'info@neurotec.co', 'default_system_input', 'Buyer Email payulatam', NULL, 0, 0, 'payulatam');
+-- INSERT INTO system VALUES(NULL,'payulatam_buyerFullName', 'Buyer FullName Email', 'Neurotec Tecnologia S.A.S', 'default_system_input' , 'Buyer Full Name payulatam', NULL, 0, 0, 'payulatam')
+
+
   CREATE TABLE payulatam_transactions (
   id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   account_id INT NOT NULL,
